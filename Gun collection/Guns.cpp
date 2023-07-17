@@ -8,6 +8,7 @@ class Gun{
 
     public:
 
+    //constructs gun with name,capacity and a loaded mag
     Gun(std::string n,int maxa){
         name = n;
         maxammo = maxa;
@@ -22,6 +23,7 @@ class Gun{
         return magammo;
     }
 
+    //checks if mag has bullets,fires
     void Fire(){
         if(magammo > 0){
             std::cout<<"pew"<<std::endl;
@@ -32,18 +34,23 @@ class Gun{
         }
     }
 
+    //reloads the mag
     void Reload(){
         std::cout<<"Reloading!!"<<std::endl;
         magammo = maxammo;
     }
 };
 
+//changes the selected gun from main
 void Selectgun(int& sel,Gun g[],int size){
+
+    //displays your options
     std::cout<<"Please select your gun:\n";
     for(int i=0;i < size;i++){
         std::cout << i << ": " + g[i].Getname()<<'\n';
     }
 
+    //checks for valid input
     bool ans = true;
     do{
     std::cin >> sel;
@@ -61,6 +68,7 @@ int main(){
            Gun("M1911",20)
     };
 
+    //find how many guns we got and runs the function
     int sizeofguns = sizeof(guns) / sizeof(guns[0]);
     Selectgun(selectedgun,guns,sizeofguns);
 
