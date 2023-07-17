@@ -1,5 +1,7 @@
 #include <iostream>
 
+int getUNum(int size);
+
 class Gun{
     private:
         std::string name;
@@ -42,27 +44,48 @@ class Gun{
 };
 
 //changes the selected gun from main
-void Selectgun(int& sel,Gun g[],int size){
+int Selectgun(Gun g[],int size){
 
     //displays your options
     std::cout<<"Please select your gun:\n";
     for(int i=0;i < size;i++){
-        std::cout << i << ": " + g[i].Getname()<<'\n';
+        std::cout << i << ": " + g[i].Getname()<< std::endl;
     }
 
     //checks for valid input
-    bool ans = true;
-    do{
-    std::cin >> sel;
-    if(sel >= 0 && sel < size){
-        ans = false;
-    }
-    }while(ans);
+    int snum;
+	do{
+		snum=getUNum(size-1);
+		//debug
+		//if(snum<0)
+		//	std::cout << "Error Code : " << snum << std::endl;
+	}while(snum<0);
+	
+	return snum;
+	
 }
+
+int getUNum(int size){//gets a possitive number from a user in a range of 0 to size
+	int num;
+		
+    if(!(std::cin >> num)){//not a number
+    	num = -1;
+	}else{
+		if(!(num>= 0 && num <= size)){//out of bounds
+			num = -2;
+		}
+	}
+    
+    std::cin.clear();
+    std::cin.ignore(123,'\n');
+    
+	return num;
+}
+
 
 int main(){
 
-    int selectedgun;
+    
     Gun guns[]{
            Gun("Revolver",6),
            Gun("M1911",20)
@@ -70,14 +93,20 @@ int main(){
 
     //find how many guns we got and runs the function
     int sizeofguns = sizeof(guns) / sizeof(guns[0]);
-    Selectgun(selectedgun,guns,sizeofguns);
+    int selectedgun=Selectgun(guns,sizeofguns);
 
     bool exit = true;
     int ans;
     std::cout << "You can fire,reload,see how much ammo is left by typing:\n"
     << "0:Exit\n1:Fire\n2:reload\n3:check\n4:change gun" <<std::endl;
     do{
-        std::cin>>ans;
+    	int ans;
+        do{
+			ans=getUNum(4);
+			//debug
+			//std::out << ans << std::endl;
+		}while(ans<0);
+		
         switch(ans){
             case 0:
                 exit = false;
@@ -92,7 +121,7 @@ int main(){
                 std::cout << guns[selectedgun].Getmagammo() << std::endl;
                 break;
             case 4:
-                Selectgun(selectedgun,guns,sizeofguns);
+                selectedgun=Selectgun(guns,sizeofguns);
                 std::cout << "You can fire,reload,see how much ammo is left by typing:\n"
                 << "0:Exit\n1:Fire\n2:reload\n3:check\n4:change gun" <<std::endl;
                 break;
