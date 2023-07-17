@@ -1,7 +1,5 @@
 #include <iostream>
 
-int getUNum(int size);
-
 class Gun{
     private:
         std::string name;
@@ -43,35 +41,14 @@ class Gun{
     }
 };
 
-//changes the selected gun from main
-int Selectgun(Gun g[],int size){
-
-    //displays your options
-    std::cout<<"Please select your gun:\n";
-    for(int i=0;i < size;i++){
-        std::cout << i << ": " + g[i].Getname()<< std::endl;
-    }
-
-    //checks for valid input
-    int snum;
-	do{
-		snum=getUNum(size-1);
-		//debug
-		//if(snum<0)
-		//	std::cout << "Error Code : " << snum << std::endl;
-	}while(snum<0);
-	
-	return snum;
-	
-}
-
-int getUNum(int size){//gets a possitive number from a user in a range of 0 to size
+//gets a possitive number from a user in a range of 0 to size
+int getUNum(int size){
 	int num;
 		
     if(!(std::cin >> num)){//not a number
     	num = -1;
 	}else{
-		if(!(num>= 0 && num <= size)){//out of bounds
+		if(!(num>= 0 && num < size)){//out of bounds
 			num = -2;
 		}
 	}
@@ -82,6 +59,29 @@ int getUNum(int size){//gets a possitive number from a user in a range of 0 to s
 	return num;
 }
 
+//changes the selected gun from main
+int Selectgun(Gun g[],int size){
+
+    //displays your options
+    std::cout<<"Please select your gun:\n";
+    for(int i=0;i < size;i++){
+        std::cout << i << ": " + g[i].Getname()<< std::endl;
+    }
+
+    //checks for valid input
+    int selectnum;
+	do{
+		selectnum=getUNum(size);
+		/*
+        debug
+		if(selectnum<0)
+			std::cout << "Error Code : " << snum << std::endl;
+        */    
+	}while(selectnum<0);
+	
+	return selectnum;
+	
+}
 
 int main(){
 
@@ -102,7 +102,7 @@ int main(){
     do{
     	int ans;
         do{
-			ans=getUNum(4);
+			ans=getUNum(5);
 			//debug
 			//std::out << ans << std::endl;
 		}while(ans<0);
