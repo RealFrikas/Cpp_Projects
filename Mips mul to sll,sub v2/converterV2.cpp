@@ -123,10 +123,12 @@ int main()
                     {
                         dosub(true);
                     }
+                    else
+                    {
                     dosub(false);
+		    }
                     tempno = 3;
                 }
-           
             }
             makesingle++;  
         } 
